@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Info Beasiswa - Temukan Beasiswa Impian Anda</title>
+    <meta name="description" content="Portal informasi beasiswa terlengkap dengan filter cerdas, rekomendasi kelayakan otomatis, dan panduan pendaftaran untuk jenjang S1, S2, dan S3." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons via CDN for modern premium icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="theme-light">
+    <!-- Main App Container -->
+    <div id="app">
+      <!-- Navbar / Header -->
+      <header class="navbar">
+        <div class="nav-container">
+          <a href="#" class="brand">
+            <div class="brand-logo">
+              <i data-lucide="graduation-cap" class="brand-icon"></i>
+            </div>
+            <span class="brand-name">Info Beasiswa</span>
+          </a>
+          
+          <nav class="nav-menu">
+            <a href="#explore" class="nav-link active" data-i18n="nav-explore">Eksplorasi</a>
+            <a href="#eligibility" class="nav-link" data-i18n="nav-eligibility">Cek Kelayakan</a>
+            <a href="#timeline" class="nav-link" data-i18n="nav-timeline">Timeline</a>
+            <a href="#faq" class="nav-link" data-i18n="nav-faq">FAQ</a>
+          </nav>
+          
+          <div class="nav-actions">
+            <!-- Language Toggle Button -->
+            <button id="lang-toggle" class="btn-icon-badge lang-selector" aria-label="Ganti Bahasa / Switch Language">
+              <i data-lucide="languages"></i>
+              <span id="active-lang-badge" class="badge lang-badge">ID</span>
+            </button>
+
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+              <i data-lucide="moon" class="icon-moon"></i>
+              <i data-lucide="sun" class="icon-sun" style="display: none;"></i>
+            </button>
+            
+            <!-- Bookmarked Button -->
+            <button id="bookmarks-btn" class="btn-icon-badge" aria-label="Lihat Beasiswa Tersimpan">
+              <i data-lucide="bookmark"></i>
+              <span id="bookmark-count" class="badge">0</span>
+            </button>
+
+            <a href="#eligibility" class="btn-primary" data-i18n="btn-eligibility-quick">Cek Kelayakan</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-overlay-glow"></div>
+        <div class="container hero-container">
+          <div class="hero-badge animate-fade-in">
+            <i data-lucide="sparkles" class="badge-icon"></i>
+            <span data-i18n="hero-badge">Portal Beasiswa Terkini & Terpercaya 2026</span>
+          </div>
+          
+          <h1 class="hero-title animate-slide-up" data-i18n="hero-title">
+            Raih Pendidikan Global dengan <br>
+            <span class="gradient-text">Beasiswa Terbaik</span>
+          </h1>
+          
+          <p class="hero-description animate-slide-up-delayed" data-i18n="hero-desc">
+            Temukan ribuan peluang beasiswa dalam dan luar negeri. Filter berdasarkan profil Anda, hitung kelayakan secara instan, dan persiapkan aplikasi Anda dengan panduan ahli.
+          </p>
+
+          <!-- Search Container -->
+          <div class="search-wrapper animate-slide-up-more">
+            <div class="search-bar">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="search-input" placeholder="Cari nama beasiswa, negara, atau universitas..." data-i18n-placeholder="search-placeholder" autocomplete="off">
+              <button id="search-btn" class="btn-search" data-i18n="search-btn">Cari</button>
+            </div>
+            
+            <!-- Auto Suggestions list -->
+            <div id="search-suggestions" class="suggestions-dropdown hidden"></div>
+
+            <!-- Quick Filter Tags -->
+            <div class="quick-tags">
+              <span class="quick-tag-label" data-i18n="search-popular">Pencarian Populer:</span>
+              <button class="quick-tag" data-query="LPDP">LPDP</button>
+              <button class="quick-tag" data-query="Jepang" data-query-en="Japan">MEXT Jepang</button>
+              <button class="quick-tag" data-query="Inggris" data-query-en="UK">Chevening</button>
+              <button class="quick-tag" data-query="Penuh" data-query-en="Full">Fully Funded</button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="stats-grid animate-fade-in-delayed">
+            <div class="stat-card">
+              <span class="stat-number" id="stat-count">8+</span>
+              <span class="stat-label" data-i18n="stat-beasiswa-label">Beasiswa Utama</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">100%</span>
+              <span class="stat-label" data-i18n="stat-verified-label">Terverifikasi Resmi</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">500+</span>
+              <span class="stat-label" data-i18n="stat-partner-label">Mitra Universitas</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">Rp 0</span>
+              <span class="stat-label" data-i18n="stat-free-label">Akses Selamanya</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Content Explorer Section -->
+      <section id="explore" class="explore-section section-padding">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title" data-i18n="explore-title">Eksplorasi Beasiswa</h2>
+              <p class="section-subtitle" data-i18n="explore-subtitle">Temukan program pembiayaan studi yang sesuai dengan tujuan akademik Anda.</p>
+            </div>
+            
+            <!-- View Settings & Sorting -->
+            <div class="explore-actions">
+              <div class="sort-wrapper">
+                <label for="sort-select" class="sort-label" data-i18n="sort-label">Urutkan:</label>
+                <select id="sort-select" class="custom-select">
+                  <option value="default" data-i18n="sort-default">Relevansi</option>
+                  <option value="deadline-asc" data-i18n="sort-deadline">Deadline Terdekat</option>
+                  <option value="funding-desc" data-i18n="sort-funding">Pendanaan Terbesar</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="explorer-grid">
+            <!-- Sidebar Filter -->
+            <aside class="filter-sidebar">
+              <div class="filter-card">
+                <div class="filter-card-header">
+                  <h3 class="filter-title">
+                    <i data-lucide="sliders-horizontal" class="filter-icon"></i>
+                    <span data-i18n="filter-title">Filter Pencarian</span>
+                  </h3>
+                  <button id="clear-filters-btn" class="btn-text hidden" data-i18n="filter-reset">Reset</button>
+                </div>
+
+                <!-- Filter Group: Jenjang -->
+                <div class="filter-group">
+                  <h4 class="filter-group-title" data-i18n="filter-degree-title">Jenjang Pendidikan</h4>
+                  <div class="checkbox-list">
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="degree" value="S1">
+                      <span data-i18n="filter-degree-s1">S1 / Undergraduate</span>
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="degree" value="S2">
+                      <span data-i18n="filter-degree-s2">S2 / Master</span>
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="degree" value="S3">
+                      <span data-i18n="filter-degree-s3">S3 / Doctoral</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Filter Group: Jenis Pendaftaran -->
+                <div class="filter-group">
+                  <h4 class="filter-group-title" data-i18n="filter-funding-title">Cakupan Pendanaan</h4>
+                  <div class="checkbox-list">
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="funding" value="Full">
+                      <span data-i18n="filter-funding-full">Penuh (Fully Funded)</span>
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="funding" value="Partial">
+                      <span data-i18n="filter-funding-partial">Sebagian (Partially Funded)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Filter Group: Lokasi -->
+                <div class="filter-group">
+                  <h4 class="filter-group-title" data-i18n="filter-location-title">Lokasi Studi</h4>
+                  <div class="checkbox-list">
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="location" value="Dalam Negeri">
+                      <span data-i18n="filter-location-indonesia">Dalam Negeri (Indonesia)</span>
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="location" value="Luar Negeri">
+                      <span data-i18n="filter-location-foreign">Luar Negeri</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Filter Group: Wilayah / Negara -->
+                <div class="filter-group">
+                  <h4 class="filter-group-title" data-i18n="filter-country-title">Negara Tujuan</h4>
+                  <select id="country-select" class="custom-select w-full">
+                    <option value="" data-i18n="filter-country-all">Semua Negara</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="Jepang" data-i18n-val="Jepang">Jepang</option>
+                    <option value="Inggris" data-i18n-val="Inggris">Inggris / UK</option>
+                    <option value="Amerika Serikat" data-i18n-val="Amerika Serikat">Amerika Serikat / USA</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Eropa" data-i18n-val="Eropa">Eropa (Lainnya)</option>
+                  </select>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Cards Grid Area -->
+            <div class="cards-area">
+              <!-- Active Filters Bar -->
+              <div id="active-filters" class="active-filters-container hidden">
+                <span class="active-filters-label">Filter aktif:</span>
+                <div id="active-filters-list" class="active-filters-chips"></div>
+              </div>
+
+              <!-- Scholarship Grid -->
+              <div id="scholarship-grid" class="scholarship-grid">
+                <!-- Cards will be injected by main.ts -->
+              </div>
+
+              <!-- Empty State -->
+              <div id="empty-state" class="empty-state-card hidden">
+                <div class="empty-icon-wrapper">
+                  <i data-lucide="search-code" class="empty-icon"></i>
+                </div>
+                <h3 class="empty-title" data-i18n="empty-title">Tidak Menemukan Beasiswa</h3>
+                <p class="empty-desc" data-i18n="empty-desc">Maaf, kami tidak menemukan beasiswa yang cocok dengan kombinasi filter dan pencarian Anda. Coba reset filter atau gunakan kata kunci lain.</p>
+                <button id="empty-reset-btn" class="btn-secondary" data-i18n="empty-btn">Reset Pencarian</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Eligibility Checker (Wizard Form) -->
+      <section id="eligibility" class="eligibility-section section-padding alt-bg">
+        <div class="container">
+          <div class="wizard-grid">
+            <div class="wizard-info">
+              <div class="hero-badge no-margin">
+                <i data-lucide="zap" class="badge-icon"></i>
+                <span data-i18n="wiz-badge">Fitur Cerdas</span>
+              </div>
+              <h2 class="section-title text-left" data-i18n="wiz-title">Pemeriksa Kelayakan Beasiswa</h2>
+              <p class="section-subtitle text-left" data-i18n="wiz-desc">Gunakan tools interaktif ini untuk memeriksa beasiswa mana saja yang cocok dengan profil akademis dan keterampilan bahasa Anda secara otomatis.</p>
+              
+              <ul class="benefit-list">
+                <li>
+                  <div class="benefit-icon"><i data-lucide="check"></i></div>
+                  <span data-i18n="wiz-benefit-1">Analisis IPK/GPA secara instan</span>
+                </li>
+                <li>
+                  <div class="benefit-icon"><i data-lucide="check"></i></div>
+                  <span data-i18n="wiz-benefit-2">Kalkulasi skor tes bahasa Inggris (IELTS/TOEFL)</span>
+                </li>
+                <li>
+                  <div class="benefit-icon"><i data-lucide="check"></i></div>
+                  <span data-i18n="wiz-benefit-3">Hemat waktu berjam-jam membaca syarat satu per satu</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Wizard Card -->
+            <div class="wizard-card-wrapper">
+              <div class="wizard-card">
+                <!-- Progress Bar -->
+                <div class="wizard-progress">
+                  <div class="progress-track">
+                    <div id="wizard-progress-bar" class="progress-bar" style="width: 25%;"></div>
+                  </div>
+                  <div class="progress-steps-label">
+                    <span data-i18n="wiz-step-label">Langkah</span> 
+                    <span id="current-step-num">1</span> 
+                    <span data-i18n="wiz-step-of">dari</span> 4
+                  </div>
+                </div>
+
+                <!-- Form Steps Container -->
+                <div class="wizard-form-container">
+                  <!-- Step 1: Jenjang & IPK -->
+                  <div class="wizard-step active" data-step="1">
+                    <h3 class="step-title" data-i18n="wiz-step1-title">Informasi Akademis</h3>
+                    <p class="step-desc" data-i18n="wiz-step1-desc">Berapa jenjang target dan nilai IPK (GPA) terakhir Anda?</p>
+                    
+                    <div class="form-group">
+                      <label class="form-label" data-i18n="wiz-step1-degree-label">Jenjang Pendidikan yang Diincar</label>
+                      <div class="radio-cards-grid">
+                        <label class="radio-card">
+                          <input type="radio" name="wiz-degree" value="S1" checked>
+                          <span class="radio-card-content">
+                            <span class="radio-title">S1 / Bachelor</span>
+                            <span class="radio-desc">Lulusan SMA/SMK sederajat</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="wiz-degree" value="S2">
+                          <span class="radio-card-content">
+                            <span class="radio-title">S2 / Master</span>
+                            <span class="radio-desc">Lulusan Sarjana/D4 sederajat</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="wiz-degree" value="S3">
+                          <span class="radio-card-content">
+                            <span class="radio-title">S3 / PhD</span>
+                            <span class="radio-desc">Lulusan Magister sederajat</span>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="wiz-gpa" data-i18n="wiz-step1-gpa-label">IPK Terakhir Anda (Skala 4.0)</label>
+                      <div class="range-slider-wrapper">
+                        <input type="range" id="wiz-gpa" min="1.0" max="4.0" step="0.05" value="3.5" class="slider-input">
+                        <div class="slider-value-display"><span id="gpa-value">3.50</span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Step 2: Bahasa Inggris -->
+                  <div class="wizard-step" data-step="2">
+                    <h3 class="step-title" data-i18n="wiz-step2-title">Kemampuan Bahasa</h3>
+                    <p class="step-desc" data-i18n="wiz-step2-desc">Masukkan skor tes kemampuan bahasa Inggris Anda jika ada.</p>
+
+                    <div class="form-group">
+                      <label class="form-label" data-i18n="wiz-step2-cert-label">Jenis Sertifikat Tes Bahasa Inggris</label>
+                      <div class="custom-select-wrapper">
+                        <select id="wiz-lang-type" class="custom-select w-full">
+                          <option value="none" data-i18n="wiz-step2-cert-none">Tidak Ada / Belum Tes</option>
+                          <option value="ielts">IELTS</option>
+                          <option value="toefl-ibt">TOEFL iBT</option>
+                          <option value="toefl-itp">TOEFL ITP</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group hidden" id="wiz-lang-score-group">
+                      <label class="form-label" for="wiz-lang-score" data-i18n="wiz-step2-score-label">Skor Tes Anda</label>
+                      <input type="number" id="wiz-lang-score" placeholder="Contoh: 6.5" class="text-input" min="0" step="0.5">
+                      <small class="form-help" id="wiz-lang-help" data-i18n="wiz-step2-score-help">Masukkan skor keseluruhan (overall score).</small>
+                    </div>
+                  </div>
+
+                  <!-- Step 3: Negara Tujuan & Funding -->
+                  <div class="wizard-step" data-step="3">
+                    <h3 class="step-title" data-i18n="wiz-step3-title">Preferensi Studi</h3>
+                    <p class="step-desc" data-i18n="wiz-step3-desc">Ke mana rencana Anda akan melanjutkannya?</p>
+
+                    <div class="form-group">
+                      <label class="form-label" data-i18n="filter-location-title">Lokasi Studi</label>
+                      <div class="toggle-buttons-group">
+                        <label class="toggle-btn-label">
+                          <input type="checkbox" name="wiz-location" value="Dalam Negeri" checked>
+                          <span class="toggle-btn-box" data-i18n="wiz-step3-loc-indo">Dalam Negeri</span>
+                        </label>
+                        <label class="toggle-btn-label">
+                          <input type="checkbox" name="wiz-location" value="Luar Negeri" checked>
+                          <span class="toggle-btn-box" data-i18n="wiz-step3-loc-abroad">Luar Negeri</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" data-i18n="wiz-step3-fund-label">Kategori Pembiayaan</label>
+                      <div class="toggle-buttons-group">
+                        <label class="toggle-btn-label">
+                          <input type="checkbox" name="wiz-funding" value="Full" checked>
+                          <span class="toggle-btn-box" data-i18n="wiz-step3-fund-full">Penuh (Fully Funded)</span>
+                        </label>
+                        <label class="toggle-btn-label">
+                          <input type="checkbox" name="wiz-funding" value="Partial">
+                          <span class="toggle-btn-box" data-i18n="wiz-step3-fund-partial">Parsial (Partial)</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Step 4: Results -->
+                  <div class="wizard-step" data-step="4">
+                    <div class="wizard-success-animation">
+                      <div class="success-icon-ring">
+                        <i data-lucide="check-check" class="success-check-icon"></i>
+                      </div>
+                    </div>
+                    <h3 class="step-title text-center" data-i18n="wiz-step4-title">Analisis Selesai!</h3>
+                    <p class="step-desc text-center" data-i18n="wiz-step4-desc">Kami telah menganalisis kelayakan Anda berdasarkan data akademis dan kemampuan bahasa.</p>
+
+                    <div class="results-box">
+                      <div class="results-stat-row">
+                        <span class="results-stat-label" data-i18n="wiz-step4-status-label">Status Kelayakan:</span>
+                        <span class="badge badge-success" id="wiz-result-status">Siap Mendaftar</span>
+                      </div>
+                      <div class="results-stat-row">
+                        <span class="results-stat-label" data-i18n="wiz-step4-match-label">Beasiswa Cocok:</span>
+                        <strong id="wiz-result-count" class="results-count">0 Beasiswa</strong>
+                      </div>
+                      <div class="matching-preview-list" id="wiz-matching-list">
+                        <!-- Tiny previews of matching scholarships will be injected here -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Footer Buttons -->
+                <div class="wizard-footer">
+                  <button id="wiz-prev-btn" class="btn-secondary hidden" data-i18n="wiz-btn-prev">
+                    <i data-lucide="chevron-left"></i> Kembali
+                  </button>
+                  <button id="wiz-next-btn" class="btn-primary flex-1" data-i18n="wiz-btn-next">
+                    Lanjut <i data-lucide="chevron-right"></i>
+                  </button>
+                  <button id="wiz-reset-btn" class="btn-primary w-full hidden" data-i18n="wiz-btn-reset">
+                    Cek Ulang Profil <i data-lucide="refresh-cw"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Registration Timeline Section -->
+      <section id="timeline" class="timeline-section section-padding">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title" data-i18n="timeline-title">Timeline Pendaftaran Terdekat</h2>
+            <p class="section-subtitle" data-i18n="timeline-desc">Pantau tanggal-tanggal penting agar Anda tidak ketinggalan tenggat waktu pengiriman berkas.</p>
+          </div>
+
+          <!-- Timeline Layout -->
+          <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-grid" id="timeline-events-container">
+              <!-- Event nodes will be injected by main.ts -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="faq-section section-padding alt-bg">
+        <div class="container max-w-3xl">
+          <div class="section-header">
+            <h2 class="section-title" data-i18n="faq-title">Pertanyaan Umum (FAQ)</h2>
+            <p class="section-subtitle" data-i18n="faq-desc">Dapatkan jawaban cepat untuk pertanyaan-pertanyaan yang paling sering diajukan mengenai persiapan beasiswa.</p>
+          </div>
+
+          <div class="faq-accordion-list" id="faq-list-container">
+            <!-- Accordion items will be handled or translated dynamically in main.ts -->
+            <div class="faq-item">
+              <button class="faq-toggle">
+                <span data-i18n="faq-q1">Kapan waktu terbaik untuk mempersiapkan dokumen beasiswa?</span>
+                <i data-lucide="chevron-down" class="faq-chevron"></i>
+              </button>
+              <div class="faq-content">
+                <p data-i18n="faq-a1">Idealnya, Anda disarankan untuk memulai persiapan 6 hingga 12 bulan sebelum tenggat waktu pendaftaran. Dokumen seperti sertifikat tes bahasa (TOEFL/IELTS), surat rekomendasi dari akademisi/atasan, serta esai (Personal Statement/Study Plan) membutuhkan waktu pengerjaan dan revisi yang tidak sebentar.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-toggle">
+                <span data-i18n="faq-q2">Apakah saya tetap bisa mendaftar beasiswa luar negeri jika belum memiliki skor IELTS?</span>
+                <i data-lucide="chevron-down" class="faq-chevron"></i>
+              </button>
+              <div class="faq-content">
+                <p data-i18n="faq-a2">Ada beberapa skema beasiswa dalam negeri atau luar negeri yang tidak mewajibkan IELTS di awal seleksi berkas (misalnya dengan menggunakan Letter of Acceptance tanpa syarat/Unconditional LoA terlebih dahulu, atau menggunakan jalur beasiswa tertentu seperti MEXT Jepang jalur U to U). Namun, sebagian besar program fully funded tingkat global mewajibkan sertifikat bahasa Inggris resmi.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-toggle">
+                <span data-i18n="faq-q3">Apa perbedaan antara Fully Funded dan Partially Funded?</span>
+                <i data-lucide="chevron-down" class="faq-chevron"></i>
+              </button>
+              <div class="faq-content">
+                <p data-i18n="faq-a3"><strong>Fully Funded (Pendanaan Penuh):</strong> Seluruh biaya kuliah (tuition fee), biaya hidup bulanan (living allowance), tiket pesawat pulang-pergi, asuransi kesehatan, dan terkadang tunjangan buku atau riset ditanggung sepenuhnya oleh penyedia beasiswa.</p>
+                <p data-i18n="faq-a3-2"><strong>Partially Funded (Pendanaan Sebagian):</strong> Hanya mencakup salah satu komponen saja, misalnya hanya gratis biaya kuliah tetapi biaya hidup ditanggung mandiri, atau hanya berupa potongan biaya kuliah sebesar sekian persen.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-toggle">
+                <span data-i18n="faq-q4">Bagaimana cara mendapatkan Surat Rekomendasi yang kuat?</span>
+                <i data-lucide="chevron-down" class="faq-chevron"></i>
+              </button>
+              <div class="faq-content">
+                <p data-i18n="faq-a4">Hubungi dosen pembimbing akademik, kepala program studi, atau atasan di tempat kerja yang mengenal kapasitas intelektual dan karakter kepemimpinan Anda secara mendalam. Berikan CV terbaru dan ringkasan beasiswa yang Anda daftar kepada mereka agar mereka dapat menulis surat rekomendasi yang relevan dan spesifik.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Section -->
+      <footer class="footer">
+        <div class="container footer-container">
+          <div class="footer-brand-column">
+            <a href="#" class="brand">
+              <div class="brand-logo">
+                <i data-lucide="graduation-cap" class="brand-icon"></i>
+              </div>
+              <span class="brand-name text-white">Info Beasiswa</span>
+            </a>
+            <p class="footer-desc" data-i18n="footer-desc">Portal independen penyedia informasi beasiswa berkualitas tinggi. Kami berkomitmen untuk mendemokrasikan akses informasi pendidikan tingkat dunia.</p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+              <a href="#" class="social-link" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+              <a href="#" class="social-link" aria-label="Linkedin"><i data-lucide="linkedin"></i></a>
+              <a href="#" class="social-link" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-links-column">
+            <h4 class="footer-heading" data-i18n="footer-nav-title">Navigasi</h4>
+            <ul class="footer-links-list">
+              <li><a href="#explore" data-i18n="nav-explore">Eksplorasi</a></li>
+              <li><a href="#eligibility" data-i18n="nav-eligibility">Cek Kelayakan</a></li>
+              <li><a href="#timeline" data-i18n="nav-timeline">Timeline</a></li>
+              <li><a href="#faq" data-i18n="nav-faq">FAQ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links-column">
+            <h4 class="footer-heading" data-i18n="footer-cat-title">Kategori Populer</h4>
+            <ul class="footer-links-list">
+              <li><a href="#" class="filter-trigger-link" data-type="degree" data-val="S1">Beasiswa Sarjana (S1)</a></li>
+              <li><a href="#" class="filter-trigger-link" data-type="degree" data-val="S2">Beasiswa Magister (S2)</a></li>
+              <li><a href="#" class="filter-trigger-link" data-type="degree" data-val="S3">Beasiswa Doktoral (S3)</a></li>
+              <li><a href="#" class="filter-trigger-link" data-type="funding" data-val="Full">Beasiswa Fully Funded</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-newsletter-column">
+            <h4 class="footer-heading" data-i18n="footer-news-title">Dapatkan Update Mingguan</h4>
+            <p class="footer-desc" data-i18n="footer-news-desc">Berlangganan buletin kami untuk menerima info beasiswa terbaru langsung di inbox email Anda.</p>
+            <form id="newsletter-form" class="newsletter-form">
+              <input type="email" placeholder="Alamat email Anda..." data-i18n-placeholder="footer-news-placeholder" class="newsletter-input" required>
+              <button type="submit" class="btn-primary" aria-label="Kirim/Send">
+                <i data-lucide="send"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <div class="container footer-bottom-container">
+            <p class="copyright">&copy; 2026 <span data-i18n="footer-copyright">Info Beasiswa. Semua Hak Cipta Dilindungi. Didesain dengan estetika tinggi untuk masa depan pendidikan bangsa.</span></p>
+            <div class="footer-bottom-links">
+              <a href="#" data-i18n="footer-privacy">Kebijakan Privasi</a>
+              <span class="bullet-divider">&bull;</span>
+              <a href="#" data-i18n="footer-terms">Syarat & Ketentuan</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Details Drawer Slide Panel -->
+      <div id="drawer-backdrop" class="drawer-backdrop hidden"></div>
+      <div id="detail-drawer" class="detail-drawer hidden">
+        <!-- Close Button -->
+        <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Tutup / Close">
+          <i data-lucide="x"></i>
+        </button>
+
+        <!-- Drawer Content Container -->
+        <div id="drawer-content" class="drawer-content">
+          <!-- Dynamically injected by main.ts -->
+        </div>
+      </div>
+
+      <!-- Toast Notification Container -->
+      <div id="toast" class="toast hidden">
+        <i data-lucide="check-circle-2" class="toast-icon"></i>
+        <span id="toast-message" class="toast-message">Pemberitahuan berhasil!</span>
+      </div>
+    </div>
+
+    <!-- Script loading is handled by Vite -->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
